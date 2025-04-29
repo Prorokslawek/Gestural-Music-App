@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "570224536446",
+    "project_id": "gestural-music-app",
+    "storage_bucket": "gestural-music-app.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:570224536446:android:243a8813eaf5f2a860612f",
+        "android_client_info": {
+          "package_name": "com.example.gestural_music_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAPe7OAIOrzacuNxpu0OPM1_NVAJPP5p3U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
