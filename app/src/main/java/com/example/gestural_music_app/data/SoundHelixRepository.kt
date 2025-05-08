@@ -10,7 +10,7 @@ class SoundHelixRepository {
             tracks.add(
                 Track(
                     id = i.toString(),
-                    title = "SoundHelix Song $i",
+                    title = "Song $i",
                     artist = "SoundHelix",
                     streamUrl = "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-$i.mp3"
                 )
