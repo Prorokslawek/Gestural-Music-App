@@ -15,6 +15,7 @@ class AudioController(private val context: Context) {
     private val player: ExoPlayer = ExoPlayer.Builder(context).build()
     private var isPlaying = false
 
+
     init {
         player.setAudioAttributes(
             AudioAttributes.Builder()
@@ -80,8 +81,12 @@ class AudioController(private val context: Context) {
             player.setPlaybackParameters(PlaybackParameters(1f, value))
             Log.d(TAG, "Pitch adjusted to $value")
         }
-        }
+    }
 
+    // Nowa metoda do sprawdzania czy odtwarzacz jest aktywny
+    fun isPlayerActive(): Boolean {
+        return player.isPlaying || player.isLoading || player.playbackState != androidx.media3.common.Player.STATE_IDLE
+    }
 
     fun release() {
         player.release()

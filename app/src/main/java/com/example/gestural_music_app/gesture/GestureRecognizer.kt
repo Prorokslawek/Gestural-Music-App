@@ -28,7 +28,7 @@ class GestureRecognizer(
     }
 
     enum class GestureType {
-        THUMB_UP, THUMB_DOWN, OPEN_PALM, CLOSED_FIST, POINTING_UP, VICTORY, NONE
+        THUMB_UP, THUMB_DOWN, OPEN_PALM, CLOSED_FIST, POINTING_UP, VICTORY, NONE,ILOVEYOU
     }
 
     private var lastGesture: GestureType = GestureType.NONE
@@ -88,6 +88,7 @@ class GestureRecognizer(
             "closed_fist" -> GestureType.CLOSED_FIST
             "pointing_up" -> GestureType.POINTING_UP
             "victory" -> GestureType.VICTORY
+            "iloveyou" -> GestureType.ILOVEYOU
             else -> GestureType.NONE
         }
 

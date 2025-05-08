@@ -138,6 +138,12 @@ class MusicViewModel(application: Application) : AndroidViewModel(application) {
                 if (_isPlaying.value) pause()
             }
             GestureRecognizer.GestureType.NONE -> stopRepeating()
+
+            GestureRecognizer.GestureType.ILOVEYOU -> {
+                // Przełącz na następny utwór
+                skipToNextTrack()
+            }
+
         }
     }
 
@@ -161,5 +167,43 @@ class MusicViewModel(application: Application) : AndroidViewModel(application) {
         super.onCleared()
         audioController.release()
         stopRepeating()
+    }
+    fun skipToNextTrack() {
+        viewModelScope.launch {
+            val currentIndex = tracks.value.indexOfFirst { it.id == currentTrack.value?.id }
+            if (currentIndex != -1 && currentIndex < tracks.value.size - 1) {
+                // Wybierz następny utwór
+                val nextTrack = tracks.value[currentIndex + 1]
+
+                // Załaduj i odtwórz następny utwór
+                audioController.loadTrack(nextTrack)
+                _currentTrack.value = nextTrack
+
+                // Zawsze odtwarzaj po przełączeniu, nawet jeśli poprzedni był zatrzymany
+                audioController.play()
+                _isPlaying.value = true
+
+                // Wyświetl komunikat
+                _musicStatusMessage.value = "Przełączono na: ${nextTrack.title}"
+
+                // Wyczyść komunikat po 3 sekundach
+                delay(3000)
+                if (_musicStatusMessage.value == "Przełączono na: ${nextTrack.title}") {
+                    _musicStatusMessage.value = null
+                }
+            } else if (currentIndex == tracks.value.size - 1) {
+                // Jeśli to ostatni utwór, wyświetl komunikat
+                _musicStatusMessage.value = "To ostatni utwór na liście"
+                delay(3000)
+                if (_musicStatusMessage.value == "To ostatni utwór na liście") {
+                    _musicStatusMessage.value = null
+                }
+            }
+        }
+    }
+
+
+    fun showMessage(message: String) {
+        _musicStatusMessage.value = message
     }
 }

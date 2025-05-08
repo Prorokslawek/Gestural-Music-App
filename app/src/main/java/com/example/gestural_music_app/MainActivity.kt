@@ -32,10 +32,7 @@ class MainActivity : ComponentActivity() {
             val modelExists = files?.contains("gesture_recognizer.task") ?: false
             Log.d("MainActivity", "Model exists: $modelExists")
             if (!modelExists) {
-                Log.e(
-                    "MainActivity",
-                    "Model gesture_recognizer.task nie został znaleziony w assets!"
-                )
+                Log.e("MainActivity", "Model gesture_recognizer.task nie został znaleziony w assets!")
             }
         } catch (e: Exception) {
             Log.e("MainActivity", "Błąd podczas sprawdzania pliku modelu", e)
@@ -43,47 +40,12 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             GesturalMusicAppTheme {
-                var isLoggedIn by remember { mutableStateOf(FirebaseAuth.getInstance().currentUser != null) }
-                var isAuthChecked by remember { mutableStateOf(false) }
-
-                DisposableEffect(Unit) {
-                    val auth = FirebaseAuth.getInstance()
-                    val listener = FirebaseAuth.AuthStateListener {
-                        isLoggedIn = it.currentUser != null
-                        isAuthChecked = true
-                    }
-                    auth.addAuthStateListener(listener)
-                    onDispose { auth.removeAuthStateListener(listener) }
-                }
-
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    when {
-                        !isAuthChecked -> {
-                            // Loader, bo nie wiemy jeszcze, czy użytkownik jest zalogowany
-                            Box(modifier = Modifier.fillMaxSize()) {
-                                CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
-                            }
-
-                        }
-
-                        isLoggedIn -> {
-                            MainScreen(
-                                onLogout = {
-                                    FirebaseAuth.getInstance().signOut()
-                                }
-                            )
-                        }
-
-                        else -> {
-                            LoginScreen(
-                                onLoginSuccess = { isLoggedIn = true },
-                                onNavigateToRegister = { /* ... */ }
-                            )
-                        }
-                    }
+                    // Zawsze pokazujemy MainScreen, bez sprawdzania logowania
+                    MainScreen()
                 }
             }
         }
